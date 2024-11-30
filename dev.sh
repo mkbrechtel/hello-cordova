@@ -1,6 +1,8 @@
 #!/bin/sh
 
-IMAGE=$(basename $(pwd))
+set -e
 
-podman build -t $IMAGE .
-exec podman run -it --rm -v ./:/app:z -p 8000:8000 $IMAGE
+NAME=$(basename $(pwd))
+
+podman build -t $NAME --target env .
+exec podman run -it --rm -v ./cordova.config.xml:/app/config.xml:ro -v ./www/:/app/www:z -p 8000:8000 --hostname $NAME --name $NAME $NAME bash -c 'yarnpkg dev & bash'
