@@ -1,3 +1,3 @@
-# hello-android-go-app
+# hello-cordova
 
 WIP

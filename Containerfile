@@ -1,15 +1,14 @@
-FROM debian:bookworm as env
+FROM debian:bookworm as cordova-app
 
-RUN apt-get update && apt-get install -y nodejs yarnpkg && apt-get clean
+RUN apt-get update && apt-get install -y nodejs npm openjdk-17-jdk android-sdk && apt-get clean
 
 WORKDIR /app
-COPY package.json yarn.lock ./
-RUN yarnpkg install --frozen-lockfile
+COPY package*.json ./
+RUN npm ci --include=dev
+
 ENV PATH="/app/node_modules/.bin:${PATH}"
 RUN cordova telemetry off
-RUN cordova platform add browser
-
-FROM env as build
-
-COPY cordova.config.xml ./
+COPY config.xml config.xml
 COPY www/ www/
+
+RUN cordova prepare
