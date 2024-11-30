@@ -8,9 +8,9 @@ ENV ANDROID_SDK_ROOT=/opt/android-sdk \
     PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/tools/bin
 
 # Accept licenses and install required Android SDK packages
-RUN yes | sdkmanager --sdk_root=$ANDROID_SDK_ROOT "cmdline-tools;latest" \
-    && yes | sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platform-tools" "platforms;android-34" \
-    && yes | sdkmanager --sdk_root=$ANDROID_SDK_ROOT "build-tools;34.0.0"
+RUN yes | sdkmanager --sdk_root=$ANDROID_SDK_ROOT "cmdline-tools;latest" &&\
+    yes | sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platform-tools" "platforms;android-34" &&\
+    yes | sdkmanager --sdk_root=$ANDROID_SDK_ROOT "build-tools;34.0.0"
 
 WORKDIR /app
 COPY package*.json ./
